@@ -1,0 +1,53 @@
+.mycell{
+	background:#FFF5EE;
+	width:20px;
+	height:20px;
+	float:left;
+}
+.sel{
+	background:linear-gradient(to left, #15ab04, #003a00);
+}
+.selA{
+	background-color: #f40300;
+	box-shadow: 0 0 10px #000000 inset;
+}
+.main{
+	margin-left: 50px;
+	margin-top: 65px;
+	width:400px;
+	height:400px;
+	padding:0px;
+	border:10px solid #003366;
+}
+.buttons{
+
+	margin: 20px 20px 40px 60px;
+	position:absolute;
+
+}
+.border{
+
+            top: 10px;
+
+            left: 30px;
+
+            position: absolute;
+
+            width: 480px;
+
+            height: 535px;
+
+            background-color: #949692;
+
+            z-index: -10;
+
+            border: 2px solid black;
+
+        }
+		#score{
+
+            margin-left: 70px;
+			margin-bottom:30px;
+            font-size: 30px;
+
+        }

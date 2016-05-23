@@ -4,10 +4,10 @@
 	height:20px;
 	float:left;
 }
-.sel{
+.snake{
 	background:linear-gradient(to left, #15ab04, #003a00);
 }
-.selA{
+.eat{
 	background-color: #f40300;
 	box-shadow: 0 0 10px #000000 inset;
 }

@@ -1,18 +1,20 @@
- var speed=200;
+$(function() {
+	var speed=200;
  var dir=1;
  var snake={
 	 length:3,
  body:["3_10","2_10","1_10"]
  };
+ /*создние еды*/
  var food=""; 
-	 function myinit(){
+	 function myinit(){ // рисуем змейку, игровое поле и генерируем еду через запуск функции
 		dir=1;
-		snake=["3_10","2_10","1_10"];
+		snake=["3_10","2_10","1_10"];//начальное положение тела змейки
 		food="";
 		$('#div_main').html("");
-		for (var r=0;r<20;r++){
-		  for (var c=0;c<20;c++){
-		$('#div_main').append('<div class=mycell id=c_'+r+'_'+c+'></div>');
+		for (var row=0;row<20;row++){ //задание размеров игрового поля
+		  for (var cell=0;cell<20;cell++){
+		$('#div_main').append('<div class=mycell id=c_'+row+'_'+cell+'></div>');
 		  }
 		}
 		  $('#c_1_10').addClass('snake');
@@ -21,27 +23,29 @@
 		  generatefood();
 	 }
 	myinit();
-	 function generatefood(){
-		var r1 = Math.floor(Math.random() * 19);
-		var c1 = Math.floor(Math.random() * 19);
-		$('#c_'+r1+'_'+c1).addClass('eat');
-		food=''+r1+'_'+c1;
+	 function generatefood(){ // генерируем еду
+		var row1 = Math.floor(Math.random() * 19);
+		var cell1 = Math.floor(Math.random() * 19);
+		$('#c_'+row1+'_'+cell1).addClass('eat');
+		food=''+row1+'_'+cell1;
 		
 	 } 
 	 function gameupdate(){
-		  var tail=snake.pop(); 
-		  $('#c_'+tail).removeClass('snake');
-		  var hh=snake[0];
-		  var rc=hh.split("_");
-		  var r=parseInt(rc[0]);
-		  var c=parseInt(rc[1]);
-			  switch(dir){
-				case 1: r=r+1; break; // Bottom
-				case 2: c=c-1; break; // Left
-				case 3: r=r-1; break; // Top
-				case 4: c=c+1; break;  // Right
+		  var tail=snake.pop(); // pop вынимает значение с конца массива snake
+		  $('#c_'+tail).removeClass('snake');//удаление класса у полученного значения (клетки)
+		  var nValue=snake[0]; // в массиве snake выбирает значение, у которого нудевой индекс,т.е "3_10"
+		  var rowCell=nValue.split("_");//split позволяет превратить строку в массив, разбив ее по разделителю( в данном случае "_"),
+		  // т.е. из "3_10" получим массив с двумя значениями - 3 и 10
+		  var row=parseInt(rowCell[0]);//выбирает из массива rc значение с нулевым индексом, parseInt() принимает строку 
+		  //и возвращает целое число, т.е. 3 будет не строкой, а целым числом
+		  var cell=parseInt(rowCell[1]);//аналогично предыдушей строке, только преобразуется второй элемент
+			  switch(dir){ //выбирается в какую сторону поворачивает змейка 
+				case 1: row=row+1; break; // Bottom
+				case 2: cell=cell-1; break; // Left
+				case 3: row=row-1; break; // Top
+				case 4: cell=cell+1; break;  // Right
 			  }  
-		  var snakeLength=""+r+"_"+c;
+		  var snakeLength=""+row+"_"+cell;//увеличение длины змейки
 			  if (snakeLength==food){
 				  snake.push(tail);
 				  $('#c_'+tail).addClass('snake');
@@ -50,10 +54,10 @@
 				var score = snake.length-3;
 				document.getElementById('score').innerHTML = 'Счёт: '+(score+1);
 			  }
-	   snake.unshift(snakeLength);
-	   $('#c_'+snakeLength).hasClass('snake'); 
-			  if (c<0 || r<0 || c>19 || r>19 ||  $('#c_'+snakeLength).hasClass('snake') ){
-				alert('Game Over! Счёт ' + (snake.length-3) + '. Press Reload for new game');    
+	   snake.unshift(snakeLength);//добавляет один или более элементов в начало массива и возвращает новую длину массива.
+	   $('#c_'+snakeLength).hasClass('snake'); //Определяет наличие указанного имени класса у любого из элементов, попавшего в набор
+			  if (cell<0 || row<0 || cell>19 || row>19 ||  $('#c_'+snakeLength).hasClass('snake') ){
+				alert('Game Over! Счёт ' + (snake.length-3) + '. Нажмите Reload для обновления игры');    
 				return;
 			  }  
 	   $('#c_'+snakeLength).addClass('snake');       
@@ -76,8 +80,10 @@
 
 	}
 
-		function reload () {
-
-			window.location.reload();
-
-	}
+	$('#start').on('click', function(){
+		Start();
+	});
+	$('#reload').on('click', function(){
+		myinit();
+	});
+})
